@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,17 +25,15 @@ namespace SaloonApiML.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Services>>> GetServices()
         {
-            return await _context.Services
-                .Include(x => x.Category)
-                .ToListAsync();
+            return await _context.Services.ToListAsync();
 
         }
 
-        // GET: api/Services/5
+        //// GET: api/Services/5
         [HttpGet("{ID}")]
         public async Task<ActionResult<IEnumerable<Services>>> GetService(int ID)
         {
-            var services = await _context.Services.FindAsync(ID);
+            var services = await _context.Services.Where(x => x.Id == ID).ToListAsync();
 
             if (services == null)
             {
