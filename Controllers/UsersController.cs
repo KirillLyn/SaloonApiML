@@ -28,10 +28,10 @@ namespace SaloonApiML.Controllers
         }
 
         // GET: api/Users/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(string id)
+        [HttpGet("{login}/{password}")]
+        public async Task<ActionResult<User>> GetUser(string login,string password)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.Users.Where(x=>x.UserLogin==login && x.UserPassword==password).FirstOrDefaultAsync();
 
             if (user == null)
             {
